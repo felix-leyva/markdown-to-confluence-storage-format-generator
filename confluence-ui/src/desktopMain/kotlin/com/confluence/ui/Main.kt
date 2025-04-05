@@ -3,7 +3,7 @@ package com.confluence.ui
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.confluence.core.DesktopFileOperations
+import de.felixlf.confluencemd.core.DesktopFileOperations
 import java.awt.Dimension
 
 fun main() = application {

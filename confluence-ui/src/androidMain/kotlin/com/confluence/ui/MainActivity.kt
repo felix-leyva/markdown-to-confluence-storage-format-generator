@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.confluence.core.AndroidFileOperations
+import de.felixlf.confluencemd.core.AndroidFileOperations
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,6 +12,9 @@ class MainActivity : ComponentActivity() {
 
         // Set the activity reference for file picking
         FilePickerManager.activity = this
+
+        // Set the context for clipboard operations
+        ClipboardHelper.setContext(applicationContext)
 
         val androidFileOperations = AndroidFileOperations(applicationContext)
 

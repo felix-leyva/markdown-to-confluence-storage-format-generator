@@ -8,12 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogWindow
+import java.awt.Toolkit
+import java.awt.datatransfer.StringSelection
 
 @Composable
 actual fun PreviewDialog(
     visible: Boolean,
     onCloseRequest: () -> Unit,
-    title: String,
+    previewText: String,
     content: @Composable (() -> Unit)
 ) {
     DialogWindow(
@@ -30,6 +32,12 @@ actual fun PreviewDialog(
                 content()
             }
         },
+    )
+}
 
-        )
+// Implementation of clipboard functionality for desktop
+actual fun copyToClipboardImpl(text: String) {
+    val selection = StringSelection(text)
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+    clipboard.setContents(selection, selection)
 }

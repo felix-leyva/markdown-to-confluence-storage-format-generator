@@ -6,7 +6,7 @@ plugins {
 kotlin {
     androidTarget()
 
-    jvm("desktop") {
+    jvm {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
         }
@@ -27,6 +27,21 @@ kotlin {
             }
         }
 
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+
+                // CommonMark dependencies for tests
+                implementation("org.commonmark:commonmark:0.21.0")
+                implementation("org.commonmark:commonmark-ext-autolink:0.21.0")
+                implementation("org.commonmark:commonmark-ext-gfm-strikethrough:0.21.0")
+                implementation("org.commonmark:commonmark-ext-gfm-tables:0.21.0")
+                implementation("org.commonmark:commonmark-ext-task-list-items:0.21.0")
+            }
+        }
+
         val androidMain by getting {
             dependencies {
                 // Android specific dependencies
@@ -34,10 +49,24 @@ kotlin {
             }
         }
 
-        val desktopMain by getting {
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.2")
+            }
+        }
+
+        val jvmMain by getting {
             dependencies {
                 // Desktop specific dependencies
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+
+                // CommonMark dependencies
+                implementation("org.commonmark:commonmark:0.21.0")
+                implementation("org.commonmark:commonmark-ext-autolink:0.21.0")
+                implementation("org.commonmark:commonmark-ext-gfm-strikethrough:0.21.0")
+                implementation("org.commonmark:commonmark-ext-gfm-tables:0.21.0")
+                implementation("org.commonmark:commonmark-ext-task-list-items:0.21.0")
             }
         }
     }

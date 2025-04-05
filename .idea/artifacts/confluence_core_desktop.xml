@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="confluence-core-desktop">
+    <output-path>$PROJECT_DIR$/confluence-core/build/libs</output-path>
+    <root id="archive" name="confluence-core-desktop.jar">
+      <element id="module-output" name="ConfluenceWriterKMP.confluence-core.desktopMain" />
+    </root>
+  </artifact>
+</component>

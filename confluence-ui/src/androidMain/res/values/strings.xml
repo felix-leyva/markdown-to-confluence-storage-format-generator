@@ -1,0 +1,4 @@
+<!-- This is a placeholder file to ensure the res directory is created in the project structure -->
+<resources>
+    <string name="app_name">Confluence Writer</string>
+</resources>

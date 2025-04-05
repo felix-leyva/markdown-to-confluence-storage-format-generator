@@ -1,5 +1,22 @@
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
 }
-rootProject.name = "ConfluenceWriter"
 
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    }
+}
+
+rootProject.name = "ConfluenceWriterKMP"
+
+include(":confluence-core")
+include(":confluence-ui")

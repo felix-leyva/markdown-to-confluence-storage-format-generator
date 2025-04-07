@@ -15,18 +15,18 @@ import org.commonmark.renderer.html.HtmlWriter
 import java.io.File
 
 /**
- * Conversor mejorado de Markdown a formato de almacenamiento de Confluence
+ * Enhanced Markdown to Confluence storage format converter
  */
 class MarkdownToConfluenceConverter {
     companion object {
         /**
-         * Convierte un texto en formato Markdown a formato de almacenamiento de Confluence
+         * Converts a text in Markdown format to Confluence storage format
          *
-         * @param markdownText Texto en formato Markdown
-         * @return String en formato de almacenamiento de Confluence
+         * @param markdownText Text in Markdown format
+         * @return String in Confluence storage format
          */
         fun convert(markdownText: String): String {
-            // Configurar extensiones de Markdown
+            // Configure Markdown extensions
             val extensions = listOf(
                 TablesExtension.create(),
                 StrikethroughExtension.create(),
@@ -49,10 +49,10 @@ class MarkdownToConfluenceConverter {
         }
 
         /**
-         * Convierte un archivo Markdown a formato de almacenamiento de Confluence
+         * Converts a Markdown file to Confluence storage format
          *
-         * @param filePath Ruta al archivo Markdown
-         * @return String en formato de almacenamiento de Confluence
+         * @param filePath Path to the Markdown file
+         * @return String in Confluence storage format
          */
         fun convertFile(filePath: String): String {
             val markdownText = File(filePath).readText()
@@ -61,7 +61,7 @@ class MarkdownToConfluenceConverter {
     }
 
     /**
-     * Renderer personalizado para convertir nodos de Markdown directamente a formato de Confluence
+     * Custom renderer to convert Markdown nodes directly to Confluence format
      */
     private class ConfluenceNodeRenderer(private val context: HtmlNodeRendererContext) : NodeRenderer {
         private val html: HtmlWriter = context.writer
@@ -124,7 +124,7 @@ class MarkdownToConfluenceConverter {
                 is Strikethrough -> renderStrikethrough(node)
                 is TaskListItemMarker -> renderTaskListItem(node)
                 else -> {
-                    // Renderizar hijos para cualquier otro tipo de nodo
+                    // Render children for any other node type
                     visitChildren(node)
                 }
             }
@@ -256,43 +256,43 @@ class MarkdownToConfluenceConverter {
         }
 
         private fun renderHtmlBlock(htmlBlock: HtmlBlock) {
-            // Intentamos convertir HTML común a formato Confluence
+            // Try to convert common HTML to Confluence format
             val html = htmlBlock.literal
 
             when {
-                // Notas (divs con class=note)
+                // Notes (divs with class=note)
                 html.contains("<div class=\"note\">") -> {
                     this.html.raw("<ac:structured-macro ac:name=\"note\">")
                     this.html.raw("<ac:rich-text-body>")
-                    // Extraer contenido entre divs
+                    // Extract content between divs
                     val content = html.substringAfter("<div class=\"note\">").substringBefore("</div>")
                     this.html.raw(content)
                     this.html.raw("</ac:rich-text-body>")
                     this.html.raw("</ac:structured-macro>")
                 }
-                // Advertencias (divs con class=warning)
+                // Warnings (divs with class=warning)
                 html.contains("<div class=\"warning\">") -> {
                     this.html.raw("<ac:structured-macro ac:name=\"warning\">")
                     this.html.raw("<ac:rich-text-body>")
-                    // Extraer contenido entre divs
+                    // Extract content between divs
                     val content = html.substringAfter("<div class=\"warning\">").substringBefore("</div>")
                     this.html.raw(content)
                     this.html.raw("</ac:rich-text-body>")
                     this.html.raw("</ac:structured-macro>")
                 }
-                // Consejos (divs con class=tip)
+                // Tips (divs with class=tip)
                 html.contains("<div class=\"tip\">") -> {
                     this.html.raw("<ac:structured-macro ac:name=\"tip\">")
                     this.html.raw("<ac:rich-text-body>")
-                    // Extraer contenido entre divs
+                    // Extract content between divs
                     val content = html.substringAfter("<div class=\"tip\">").substringBefore("</div>")
                     this.html.raw(content)
                     this.html.raw("</ac:rich-text-body>")
                     this.html.raw("</ac:structured-macro>")
                 }
-                // Otros bloques HTML
+                // Other HTML blocks
                 else -> {
-                    // Pasamos el HTML como está, aunque puede que no sea compatible con Confluence
+                    // Pass the HTML as is, though it may not be compatible with Confluence
                     this.html.raw(html)
                 }
             }

@@ -19,7 +19,7 @@ class CodeBlockBuilder(private val writer: XMLStreamWriter, language: String) {
     }
 
     fun content(code: String) {
-        // Reemplazar el CDATA vacío
+        // Replace the empty CDATA
         writer.writeCharacters(code)
     }
 

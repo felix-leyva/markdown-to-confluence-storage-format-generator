@@ -6,30 +6,27 @@ import javax.xml.stream.XMLStreamConstants
 import javax.xml.stream.XMLStreamWriter
 
 /**
- * Utilidad para procesar y transferir contenido XML
+ * Utility class for XML operations
  */
 object XmlUtils {
     /**
-     * Transfiere contenido XML desde un string a un XMLStreamWriter
+     * Transfers XML content from a string to the XMLStreamWriter
      *
-     * @param xmlContent Contenido XML como string
-     * @param writer XMLStreamWriter donde escribir el contenido
-     * @param addWrapper Si es true, envuelve el contenido en un elemento contenedor
+     * @param xmlContent XML Content
+     * @param writer XMLStreamWriter to write to
+     * @param addWrapper Whether to add a wrapper element around the content
      */
     fun transferXmlContent(xmlContent: String, writer: XMLStreamWriter, addWrapper: Boolean = false) {
         try {
-            // Añadir wrapper para asegurar un documento XML bien formado
             val contentToProcess = if (addWrapper) {
                 "<wrapper>$xmlContent</wrapper>"
             } else {
                 xmlContent
             }
 
-            // Configurar el factory para StAX
             val factory = XMLInputFactory.newInstance()
             val reader = factory.createXMLStreamReader(StringReader(contentToProcess))
 
-            // Procesar eventos del XML
             var depth = 0
             var skipDepth = -1
 
@@ -38,21 +35,17 @@ object XmlUtils {
                     XMLStreamConstants.START_ELEMENT -> {
                         depth++
 
-                        // Saltar el elemento wrapper si existe
                         if (addWrapper && reader.localName == "wrapper" && depth == 1) {
                             skipDepth = depth
                             continue
                         }
 
-                        // Si estamos dentro del elemento a saltar, continuamos
                         if (skipDepth > 0 && depth > skipDepth) {
                             continue
                         }
 
-                        // Iniciar elemento
                         writer.writeStartElement(reader.localName)
 
-                        // Procesar atributos
                         for (i in 0 until reader.attributeCount) {
                             writer.writeAttribute(
                                 reader.getAttributeLocalName(i),
@@ -62,7 +55,6 @@ object XmlUtils {
                     }
 
                     XMLStreamConstants.END_ELEMENT -> {
-                        // Si estamos dentro del elemento a saltar, continuamos
                         if (skipDepth > 0 && depth >= skipDepth) {
                             depth--
                             if (depth == skipDepth - 1) {
@@ -71,23 +63,19 @@ object XmlUtils {
                             continue
                         }
 
-                        // Cerrar elemento
                         writer.writeEndElement()
                         depth--
                     }
 
                     XMLStreamConstants.CHARACTERS -> {
-                        // Si estamos dentro del elemento a saltar, continuamos
                         if (skipDepth > 0 && depth > skipDepth) {
                             continue
                         }
 
-                        // Escribir texto
                         writer.writeCharacters(reader.text)
                     }
 
                     XMLStreamConstants.CDATA -> {
-                        // Si estamos dentro del elemento a saltar, continuamos
                         if (skipDepth > 0 && depth > skipDepth) {
                             continue
                         }
@@ -100,7 +88,6 @@ object XmlUtils {
 
             reader.close()
         } catch (e: Exception) {
-            // Si hay algún error, simplemente escribimos el contenido como CDATA
             writer.writeCData(xmlContent)
         }
     }

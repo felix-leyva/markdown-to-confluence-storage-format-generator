@@ -4,7 +4,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Path to the JAR file (assuming it's in the build/libs directory)
-JAR_PATH="$SCRIPT_DIR/build/libs/ConfluenceWriter-1.0-SNAPSHOT.jar"
+JAR_PATH="$SCRIPT_DIR/confluence-md-cli/build/libs/confluence-md-cli.jar"
 
 # Check if the JAR exists
 if [ ! -f "$JAR_PATH" ]; then

@@ -1,4 +1,4 @@
-package de.felixlf.confluencemd.core.cli
+package de.felixlf.confluencemd.cli
 
 import de.felixlf.confluencemd.core.ConfluenceDSL
 import java.io.File
@@ -107,7 +107,7 @@ class ConfluenceWriterCli {
                     }
 
                     println("Converting file: $inputFile")
-                    ConfluenceDSL.fromMarkdownFile(inputFile)
+                    ConfluenceDSL.Companion.fromMarkdownFile(inputFile)
                 }
 
                 "string" -> {
@@ -115,7 +115,7 @@ class ConfluenceWriterCli {
                     // Process the markdownContent to handle escaped newlines
                     val processedContent = markdownContent!!
                         .replace("\\n", "\n")  // Replace escaped newlines with actual newlines
-                    ConfluenceDSL.fromMarkdown(processedContent)
+                    ConfluenceDSL.Companion.fromMarkdown(processedContent)
                 }
 
                 else -> throw IllegalArgumentException("Invalid mode: $mode")

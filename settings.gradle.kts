@@ -1,3 +1,4 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         google()
@@ -20,3 +21,4 @@ rootProject.name = "ConfluenceWriterKMP"
 
 include(":confluence-core")
 include(":confluence-ui")
+include("confluence-md-cli")

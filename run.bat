@@ -1,6 +1,6 @@
 @echo off
 echo Building Confluence Writer with JVM toolchain...
-echo This will automatically download and use JDK 11 if needed.
+echo This will automatically download and use JDK 17 if needed.
 call gradlew :confluence-ui:build
 
 if %ERRORLEVEL% EQU 0 (

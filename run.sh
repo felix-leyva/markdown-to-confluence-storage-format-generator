@@ -7,7 +7,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "$SCRIPT_DIR"
 
 echo "Building Confluence Writer with JVM toolchain..."
-echo "This will automatically download and use JDK 11 if needed."
+echo "This will automatically download and use JDK 17 if needed."
 ./gradlew :confluence-ui:build
 
 if [ $? -eq 0 ]; then

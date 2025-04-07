@@ -18,7 +18,7 @@ A simple command line version is also available.
 
 ## Requirements
 
-- JDK 11 or higher
+- JDK 17 or higher
 - Android SDK 24 or higher (for Android)
 
 ## Building the Compose UI Project

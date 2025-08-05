@@ -40,6 +40,21 @@ object ClipboardHelper {
     }
 }
 
+@Composable
+actual fun RealtimeConvertorDialog(
+    visible: Boolean,
+    onCloseRequest: () -> Unit,
+    content: @Composable (() -> Unit)
+) {
+    if(visible) {
+        Dialog(
+            onDismissRequest = onCloseRequest
+        ) {
+            content()
+        }
+    }
+}
+
 // Implementation of clipboard functionality for Android
 actual fun copyToClipboardImpl(text: String) {
     ClipboardHelper.copyText(text)

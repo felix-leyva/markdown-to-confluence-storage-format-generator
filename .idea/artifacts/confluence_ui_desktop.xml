@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="confluence-ui-desktop">
-    <output-path>$PROJECT_DIR$/confluence-ui/build/libs</output-path>
-    <root id="archive" name="confluence-ui-desktop.jar">
-      <element id="module-output" name="ConfluenceWriterKMP.confluence-ui.desktopMain" />
-    </root>
-  </artifact>
-</component>

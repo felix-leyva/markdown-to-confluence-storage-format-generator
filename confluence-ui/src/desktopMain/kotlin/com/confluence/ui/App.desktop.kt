@@ -6,7 +6,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogState
 import androidx.compose.ui.window.DialogWindow
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
@@ -27,6 +29,31 @@ actual fun PreviewDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp),
+                color = MaterialTheme.colors.surface
+            ) {
+                content()
+            }
+        },
+    )
+}
+
+@Composable
+actual fun RealtimeConvertorDialog(
+    visible: Boolean,
+    onCloseRequest: () -> Unit,
+    content: @Composable (() -> Unit)
+) {
+    val dialogState = DialogState(size = DpSize(400.dp, 700.dp))
+    DialogWindow(
+        visible = visible,
+        state = dialogState,
+        onCloseRequest = onCloseRequest,
+        title = "Realtime Markdown to Confluence Converter",
+        content = {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1200.dp),
                 color = MaterialTheme.colors.surface
             ) {
                 content()

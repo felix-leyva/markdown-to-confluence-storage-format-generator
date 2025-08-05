@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.confluence.ui.components.PreviewDialog
+import com.confluence.ui.components.RealtimeConvertor
 import com.confluence.ui.components.StatusMessage
 import de.felixlf.confluencemd.core.ConfluenceWriter
 import de.felixlf.confluencemd.core.FileOperations
@@ -28,6 +29,7 @@ fun App(fileOperations: FileOperations) {
         }
         val (showPreview, setShowPreview) = remember { mutableStateOf(false) }
         val (previewText, setPreviewText) = remember { mutableStateOf("") }
+        val (showRealtimeConvertor, setShowRealtimeConvertor) = remember { mutableStateOf(false) }
 
         LaunchedEffect(inputPath, outputPath) {
             if (inputPath.isNotEmpty() && outputPath.isEmpty()) {
@@ -89,7 +91,7 @@ fun App(fileOperations: FileOperations) {
                     }
                 }
 
-                // Preview button and Convert button
+                // Preview button, Realtime Convertor button and Convert button
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -112,6 +114,14 @@ fun App(fileOperations: FileOperations) {
                         enabled = inputPath.isNotEmpty() && !isConverting
                     ) {
                         Text("Preview")
+                    }
+
+                    Button(
+                        onClick = {
+                            setShowRealtimeConvertor(true)
+                        }
+                    ) {
+                        Text("Realtime Convertor")
                     }
 
                     Button(
@@ -150,6 +160,12 @@ fun App(fileOperations: FileOperations) {
                     previewText = previewText,
                     setShowPreview = setShowPreview
                 )
+
+                RealtimeConvertor(
+                    visible = showRealtimeConvertor,
+                    confluenceWriter = confluenceWriter,
+                    setShowRealtimeConvertor = setShowRealtimeConvertor
+                )
             }
         }
     }
@@ -168,5 +184,12 @@ expect fun PreviewDialog(
     visible: Boolean,
     onCloseRequest: () -> Unit,
     previewText: String,
+    content: @Composable () -> Unit
+)
+
+@Composable
+expect fun RealtimeConvertorDialog(
+    visible: Boolean,
+    onCloseRequest: () -> Unit,
     content: @Composable () -> Unit
 )
